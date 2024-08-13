@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B7102542C6C9BFD005F51A8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7102532C6C9BFD005F51A8 /* Extensions.swift */; };
+		6B71028C2C6E0AF6005F51A8 /* BottomSheetDetent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B71028B2C6E0AF6005F51A8 /* BottomSheetDetent.swift */; };
 		6BC5AED72C6BAD6500F6FA35 /* BottomSheetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC5AED62C6BAD6500F6FA35 /* BottomSheetApp.swift */; };
 		6BC5AED92C6BAD6500F6FA35 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC5AED82C6BAD6500F6FA35 /* ContentView.swift */; };
 		6BC5AEDB2C6BAD6600F6FA35 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BC5AEDA2C6BAD6600F6FA35 /* Assets.xcassets */; };
@@ -15,6 +17,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6B7102532C6C9BFD005F51A8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		6B71028B2C6E0AF6005F51A8 /* BottomSheetDetent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetDetent.swift; sourceTree = "<group>"; };
 		6BC5AED32C6BAD6500F6FA35 /* BottomSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BottomSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BC5AED62C6BAD6500F6FA35 /* BottomSheetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetApp.swift; sourceTree = "<group>"; };
 		6BC5AED82C6BAD6500F6FA35 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -34,6 +38,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6B71028A2C6E0AD3005F51A8 /* Sheet */ = {
+			isa = PBXGroup;
+			children = (
+				6BC5AEE42C6BAD8D00F6FA35 /* BottomSheetModifier.swift */,
+				6B7102532C6C9BFD005F51A8 /* Extensions.swift */,
+				6B71028B2C6E0AF6005F51A8 /* BottomSheetDetent.swift */,
+			);
+			path = Sheet;
+			sourceTree = "<group>";
+		};
 		6BC5AECA2C6BAD6500F6FA35 = {
 			isa = PBXGroup;
 			children = (
@@ -57,7 +71,7 @@
 				6BC5AED82C6BAD6500F6FA35 /* ContentView.swift */,
 				6BC5AEDA2C6BAD6600F6FA35 /* Assets.xcassets */,
 				6BC5AEDC2C6BAD6600F6FA35 /* Preview Content */,
-				6BC5AEE42C6BAD8D00F6FA35 /* BottomSheetModifier.swift */,
+				6B71028A2C6E0AD3005F51A8 /* Sheet */,
 			);
 			path = BottomSheet;
 			sourceTree = "<group>";
@@ -86,6 +100,8 @@
 			dependencies = (
 			);
 			name = BottomSheet;
+			packageProductDependencies = (
+			);
 			productName = BottomSheet;
 			productReference = 6BC5AED32C6BAD6500F6FA35 /* BottomSheet.app */;
 			productType = "com.apple.product-type.application";
@@ -114,6 +130,8 @@
 				Base,
 			);
 			mainGroup = 6BC5AECA2C6BAD6500F6FA35;
+			packageReferences = (
+			);
 			productRefGroup = 6BC5AED42C6BAD6500F6FA35 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -140,9 +158,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B71028C2C6E0AF6005F51A8 /* BottomSheetDetent.swift in Sources */,
 				6BC5AEE52C6BAD8D00F6FA35 /* BottomSheetModifier.swift in Sources */,
 				6BC5AED92C6BAD6500F6FA35 /* ContentView.swift in Sources */,
 				6BC5AED72C6BAD6500F6FA35 /* BottomSheetApp.swift in Sources */,
+				6B7102542C6C9BFD005F51A8 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,32 +8,48 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isShowingShortPaywall = false
+    @State private var isShowingSheet = false
 
     var body: some View {
         VStack {
             Button {
                 withAnimation {
-
-                    isShowingShortPaywall = true
+                    isShowingSheet = true
                 }
             } label: {
                 Text("show sheet")
             }
-
         }
         .padding()
-        .bottomSheet(isPresented: $isShowingShortPaywall, detents: [.large, .bySize, .medium]) {
-            VStack {
-                Spacer()
-                Text("This is sheet")
-                    .font(.largeTitle)
-                Spacer()
+        .bottomSheet(isPresented: $isShowingSheet) {
+            ScrollView {
+                VStack {
+                    ForEach(0..<100) {
+                        Text("\($0)")
+                            .frame(maxWidth: .infinity)
+                    }
+                }
             }
             .frame(maxWidth: .infinity)
-            .background(Color.red)
-            .frame(height: 300)
+            .padding()
         }
+//        .sheet(isPresented: $isShowingSheet) {
+//            ScrollView {
+//                VStack {
+//                    ForEach(0..<100) {
+//                        if #available(iOS 16.0, *) {
+//                            Text("\($0)")
+//                                .frame(maxWidth: .infinity)
+//                                .presentationDetents([.medium, .large])
+//                        } else {
+//                            // Fallback on earlier versions
+//                        }
+//                    }
+//                }
+//            }
+//            .frame(maxWidth: .infinity)
+//            .padding()
+//        }
     }
 }
 
