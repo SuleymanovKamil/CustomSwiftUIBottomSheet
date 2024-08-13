@@ -23,16 +23,16 @@ struct ContentView: View {
 
         }
         .padding()
-        .popup(isPresented: $isShowingShortPaywall) {
+        .bottomSheet(isPresented: $isShowingShortPaywall, detents: [.large, .bySize, .medium]) {
             VStack {
                 Spacer()
                 Text("This is sheet")
                     .font(.largeTitle)
-                     Spacer()
+                Spacer()
             }
-            .frame(height: 300)
             .frame(maxWidth: .infinity)
-            .background(.red)
+            .background(Color.red)
+            .frame(height: 300)
         }
     }
 }
