@@ -7,49 +7,41 @@
 
 import SwiftUI
 
-enum BottomSheetDetent: Equatable, CaseIterable {
+enum BottomSheetDetent: Equatable, CaseIterable, Hashable {
     static var allCases: [BottomSheetDetent] = [
         .large,
         .medium,
-        .custom(.zero)
+        .height(.zero),
+        .fullScreen
     ]
 
     case medium
     case large
-    case custom(_ height: CGFloat)
+    case height(_ value: CGFloat)
+    case fullScreen
 
     static func == (lhs: BottomSheetDetent, rhs: BottomSheetDetent) -> Bool {
         switch (lhs, rhs) {
-        case (.medium, .medium), (.large, .large):
+        case (.medium, .medium), (.large, .large), (.fullScreen, .fullScreen):
             return true
-        case (.custom(let lhsHeight), .custom(let rhsHeight)):
+        case (.height(let lhsHeight), .height(let rhsHeight)):
             return lhsHeight == rhsHeight
         default:
             return false
         }
     }
 
-    mutating func next(_ availableDetents: [Self]) {
-        guard let currentIndex = availableDetents.firstIndex(of: self),
-              currentIndex < availableDetents.count - 1 else {
-            return
-        }
-
+    mutating func next(_ currentIndex: Int, _ availableDetents: [Self]) {
         let nextIndex: Int = (currentIndex + 1) % availableDetents.count
         self = availableDetents[nextIndex]
     }
 
-    mutating func previous(_ availableDetents: [Self]) {
-        guard let currentIndex = availableDetents.firstIndex(of: self),
-              currentIndex > 0 else {
-            return
-        }
-
+    mutating func previous(_ currentIndex: Int, _ availableDetents: [Self]) {
         let previousIndex: Int = (currentIndex - 1) % availableDetents.count
         self = availableDetents[previousIndex]
     }
 
-    var viewHeight: CGFloat? {
+    var viewHeight: CGFloat {
         let screenSizeHeight: CGFloat = UIScreen.main.bounds.size.height
         let topInset: CGFloat = (
             UIApplication
@@ -66,8 +58,10 @@ enum BottomSheetDetent: Equatable, CaseIterable {
             screenSizeHeight / 2
         case .large:
             screenSizeHeight - topInset
-        case .custom(let height):
+        case .height(let height):
             height
+        case .fullScreen:
+            screenSizeHeight + topInset
         }
     }
 }

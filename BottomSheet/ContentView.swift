@@ -8,51 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
+    var isUsingNativeSheet: Bool = false
     @State private var isShowingSheet = false
 
     var body: some View {
         VStack {
             Button {
-                withAnimation {
-                    isShowingSheet = true
-                }
+                isShowingSheet.toggle()
             } label: {
-                Text("show sheet")
+                Text("Show bottom sheet")
+                    .font(.system(size: 18, design: .monospaced))
+                    .foregroundColor(.white)
             }
         }
-        .padding()
-        .bottomSheet(isPresented: $isShowingSheet) {
-            ScrollView {
-                VStack {
-                    ForEach(0..<100) {
-                        Text("\($0)")
-                            .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.blue)
+        .ignoresSafeArea()
+        .if(isUsingNativeSheet) { view in
+            if #available(iOS 16.0, *) {
+                view
+                    .sheet(isPresented: $isShowingSheet) {
+                        AnotherView()
+                            .presentationDetents([.height(250), .medium, .large])
                     }
-                }
             }
-            .frame(maxWidth: .infinity)
-            .padding()
         }
-//        .sheet(isPresented: $isShowingSheet) {
-//            ScrollView {
-//                VStack {
-//                    ForEach(0..<100) {
-//                        if #available(iOS 16.0, *) {
-//                            Text("\($0)")
-//                                .frame(maxWidth: .infinity)
-//                                .presentationDetents([.medium, .large])
-//                        } else {
-//                            // Fallback on earlier versions
-//                        }
-//                    }
-//                }
-//            }
-//            .frame(maxWidth: .infinity)
-//            .padding()
-//        }
+        .if(!isUsingNativeSheet) { view in
+            view
+                .bottomSheet(
+                    isPresented: $isShowingSheet,
+                    presentationDetents: [.height(250), .medium, .large, .fullScreen]
+                ) {
+                    AnotherView()
+                }
+        }
     }
 }
 
-#Preview {
+#Preview("Custom sheet") {
     ContentView()
+}
+
+#Preview("Native sheet") {
+    ContentView(isUsingNativeSheet: true)
 }
