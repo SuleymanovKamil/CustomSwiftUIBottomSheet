@@ -12,8 +12,6 @@ extension View {
     ///
     /// - Parameters:
     ///   - cornerRadius: The corner radius of the bottom sheet. The default value is 20, and the maximum value is 30.
-    ///   - isShowingDragIndicator: A boolean value indicating whether the drag indicator should be displayed. The default value is `true`.
-    ///   - isShowingCloseButton: A boolean value indicating whether the close button should be displayed. The default value is `false`.
     ///   - isShowingBackground: A boolean value indicating whether the background behind the bottom sheet should be displayed. The default value is `true`.
     ///   - isShowingShadow: A boolean value indicating whether the shadow above the bottom sheet should be displayed. The default value is `false`.
     ///   - detents: An array of `BottomSheetDetent` objects that define the allowable sizes of the bottom sheet. If `nil`, the size is determined by the content. The array may include `.medium`, `.large`, and/or `.custom(height)`. The custom height cannot be greater than large.
@@ -22,8 +20,6 @@ extension View {
     func bottomSheet<Content: View>(
         isPresented: Binding<Bool>,
         cornerRadius: CGFloat = 20,
-        isShowingDragIndicator: Bool = true,
-        isShowingCloseButton: Bool = false,
         isShowingBackground: Bool = true,
         isShowingShadow: Bool = false,
         presentationDetents: [BottomSheetDetent]? = nil,
@@ -33,8 +29,6 @@ extension View {
             BottomSheet(
                 isPresented: isPresented,
                 cornerRadius: cornerRadius,
-                isShowingDragIndicator: isShowingDragIndicator,
-                isShowingCloseButton: isShowingCloseButton,
                 isShowingBackground: isShowingBackground, 
                 isShowingShadow: isShowingShadow,
                 detents: presentationDetents,
@@ -111,27 +105,5 @@ struct CustomRoundedRectangle: Shape {
         )
         
         return Path(path.cgPath)
-    }
-}
-
-private struct SafeAreaInsetsKey: EnvironmentKey {
-    static var defaultValue: EdgeInsets {
-        (UIApplication
-            .shared
-            .connectedScenes
-            .flatMap { ($0 as? UIWindowScene)?.windows ?? [] }
-            .first { $0.isKeyWindow }?.safeAreaInsets ?? .zero).insets
-    }
-}
-
-public extension EnvironmentValues {
-    var safeAreaInsets: EdgeInsets {
-        self[SafeAreaInsetsKey.self]
-    }
-}
-
-private extension UIEdgeInsets {
-    var insets: EdgeInsets {
-        EdgeInsets(top: top, leading: left, bottom: bottom, trailing: right)
     }
 }

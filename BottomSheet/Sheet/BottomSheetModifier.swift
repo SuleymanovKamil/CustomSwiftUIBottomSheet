@@ -10,8 +10,6 @@ import SwiftUI
 struct BottomSheet<SheetContent: View>: ViewModifier {
     @Binding private var isPresented: Bool
     private let cornerRadius: CGFloat
-    private let isShowingDragIndicator: Bool
-    private let isShowingCloseButton: Bool
     private let isShowingBackground: Bool
     private let isShowingShadow: Bool
     private let detents: [BottomSheetDetent]?
@@ -22,12 +20,12 @@ struct BottomSheet<SheetContent: View>: ViewModifier {
     @State private var contentHeight: CGFloat = .zero
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.safeAreaInsets) private var safeArea
+    @Environment(\.showingDragIndicator) private var isShowingDragIndicator
+    @Environment(\.showingCloseButton) private var isShowingCloseButton
 
     init(
         isPresented: Binding<Bool>,
         cornerRadius: CGFloat,
-        isShowingDragIndicator: Bool,
-        isShowingCloseButton: Bool,
         isShowingBackground: Bool,
         isShowingShadow: Bool,
         detents: [BottomSheetDetent]?,
@@ -35,8 +33,6 @@ struct BottomSheet<SheetContent: View>: ViewModifier {
     ) {
         self._isPresented = isPresented
         self.cornerRadius = cornerRadius > 30 ? 20 : cornerRadius
-        self.isShowingDragIndicator = isShowingDragIndicator
-        self.isShowingCloseButton = isShowingCloseButton
         self.isShowingBackground = isShowingBackground
         self.isShowingShadow = isShowingShadow
         if let detents {

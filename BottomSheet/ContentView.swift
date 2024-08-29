@@ -24,24 +24,14 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.blue)
         .ignoresSafeArea()
-        .if(isUsingNativeSheet) { view in
-            if #available(iOS 16.0, *) {
-                view
-                    .sheet(isPresented: $isShowingSheet) {
-                        AnotherView()
-                            .presentationDetents([.height(250), .medium, .large])
-                    }
-            }
+        .bottomSheet(
+            isPresented: $isShowingSheet,
+            presentationDetents: [.height(250), .medium, .large, .fullScreen]
+        ) {
+            AnotherView()
         }
-        .if(!isUsingNativeSheet) { view in
-            view
-                .bottomSheet(
-                    isPresented: $isShowingSheet,
-                    presentationDetents: [.height(250), .medium, .large, .fullScreen]
-                ) {
-                    AnotherView()
-                }
-        }
+        .showingDragIndicator()
+        .showingCloseButton()
     }
 }
 
