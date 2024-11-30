@@ -9,12 +9,14 @@ import SwiftUI
 
 enum BottomSheetDetent: Equatable, CaseIterable, Hashable {
     static var allCases: [BottomSheetDetent] = [
+        .bySize,
         .large,
         .medium,
         .height(.zero),
         .fullScreen
     ]
 
+    case bySize
     case medium
     case large
     case height(_ value: CGFloat)
@@ -22,7 +24,7 @@ enum BottomSheetDetent: Equatable, CaseIterable, Hashable {
 
     static func == (lhs: BottomSheetDetent, rhs: BottomSheetDetent) -> Bool {
         switch (lhs, rhs) {
-        case (.medium, .medium), (.large, .large), (.fullScreen, .fullScreen):
+        case (.bySize, .bySize), (.medium, .medium), (.large, .large), (.fullScreen, .fullScreen):
             return true
         case (.height(let lhsHeight), .height(let rhsHeight)):
             return lhsHeight == rhsHeight
@@ -62,6 +64,8 @@ enum BottomSheetDetent: Equatable, CaseIterable, Hashable {
             height
         case .fullScreen:
             screenSizeHeight + topInset
+        case .bySize:
+                .zero
         }
     }
 }

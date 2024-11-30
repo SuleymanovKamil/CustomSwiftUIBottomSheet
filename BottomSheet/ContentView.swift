@@ -23,10 +23,10 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.blue)
-        .ignoresSafeArea()
+        .edgesIgnoringSafeArea(.all)
         .bottomSheet(
             isPresented: $isShowingSheet,
-            presentationDetents: [.height(250), .medium, .large, .fullScreen]
+            presentationDetents: [.medium]
         ) {
             AnotherView()
         }
@@ -37,8 +37,4 @@ struct ContentView: View {
 
 #Preview("Custom sheet") {
     ContentView()
-}
-
-#Preview("Native sheet") {
-    ContentView(isUsingNativeSheet: true)
 }

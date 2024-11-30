@@ -9,18 +9,27 @@ import SwiftUI
 
 struct AnotherView: View {
     var body: some View {
-        VStack(spacing: 30) {
-            Spacer()
-            Text("This is bottom sheet")
-            Image(systemName: "doc.text.image")
-                .resizable()
-                .scaledToFit()
-                .size(100)
-            Spacer()
+        VStack {
+            Color.gray
+                .frame(height: 200)
+
+            ScrollView {
+                VStack {
+                    ForEach(0..<100) {
+                        Text("\($0)")
+                            .frame(maxWidth: .infinity)
+                    }
+                }
+            }
+
+            Color.red
+                .frame(height: 200)
         }
+        .padding()
     }
 }
 
+
 #Preview {
-    AnotherView()
+    ContentView()
 }

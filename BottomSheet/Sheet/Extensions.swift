@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    /// Applies the `BottomSheet` modifier to create a customizable bottom sheet.
+    /// Applies the `BottomSheet` modifier to create a customisable bottom sheet.
     ///
     /// - Parameters:
     ///   - cornerRadius: The corner radius of the bottom sheet. The default value is 20, and the maximum value is 30.
@@ -64,6 +64,21 @@ extension View {
     func size(_ size: CGFloat) -> some View {
         self.frame(width: size, height: size)
     }
+
+    func UIKitView<T: UIView>(as type: T.Type, _ completion: @escaping ((T) -> Void)) -> some View {
+        self.background(
+            UIKitViewExtractor { view in
+                if let someView = view as? T {
+                    completion(someView)
+                }
+            }
+        )
+        .compositingGroup()
+    }
+
+    func contentSize(onChange: @escaping (CGSize) -> Void) -> some View {
+        self.modifier(ContentSize(action: onChange))
+    }
 }
 
 extension UIDevice {
@@ -106,4 +121,46 @@ struct CustomRoundedRectangle: Shape {
         
         return Path(path.cgPath)
     }
+}
+
+private struct InnerHeightPreferenceKey: PreferenceKey {
+    static var defaultValue: CGSize = .zero
+    static func reduce(value: inout CGSize, nextValue: () -> CGSize) {
+        value = nextValue()
+    }
+}
+
+private struct ContentSize: ViewModifier {
+    let action: (CGSize) -> Void
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        content
+            .overlay(
+                GeometryReader { geometry in
+                    Color.clear.preference(key: InnerHeightPreferenceKey.self, value: geometry.size)
+                }
+            )
+            .onPreferenceChange(InnerHeightPreferenceKey.self, perform: action)
+    }
+}
+
+private struct UIKitViewExtractor: UIViewRepresentable {
+    let onViewExtracted: (UIView) -> Void
+
+    func makeUIView(context: Context) -> UIView {
+        let view: UIView = .init(frame: .zero)
+        view.backgroundColor = .clear
+        view.isUserInteractionEnabled = false
+
+        DispatchQueue.main.async {
+            if let UIKitView = view.superview?.superview?.subviews.last?.subviews.first {
+                onViewExtracted(UIKitView)
+            }
+        }
+
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {}
 }
